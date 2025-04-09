@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PenalSystem.Interfaces;
 using PenalSystem.Context;
 
-namespace PenalSystem.Repositories;
+namespace PenalSystem.Repositories.Base;
 
 // de novo, classe genérica (+ explicações na interface)
 public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class, IEntity

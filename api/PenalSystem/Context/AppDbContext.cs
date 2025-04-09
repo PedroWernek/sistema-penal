@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-// using PenalSystem.Entities;
+using PenalSystem.Entities;
 
 namespace PenalSystem.Context;
 
@@ -9,7 +9,7 @@ public class AppDbContext : DbContext
     {
     }
 
-    // public required DbSet<Book> Books { get; set; }
+    public required DbSet<Book> Books { get; set; }
     // public required DbSet<WorkDay> WorkDays { get; set; }
     // public required DbSet<Employee> Employees { get; set; }
     // public required DbSet<Prisoner> Prisoners { get; set; }
