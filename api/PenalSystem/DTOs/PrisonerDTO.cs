@@ -30,9 +30,7 @@ public class PrisonerCreateDTO : PersonCreateDTO
     public DateTime UpdatedReleaseDate { get; set; }
 }
 
-// pode dar problema dps
-public class PrisonerUpdateDTO
+public class PrisonerUpdateDTO : PersonUpdateDTO
 {
-    public Guid Id { get; set; }
     public required string Name { get; set; }
 }

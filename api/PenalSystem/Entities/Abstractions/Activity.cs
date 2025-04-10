@@ -8,6 +8,5 @@ public abstract class Activity : IEntity
     public Guid PrisonerId { get; set; }
     public DateTime Date { get; set; }
 
-    // public required Prisoner Prisoner { get; set; }
-    // TODO: implementar a navegação
+    public required Prisoner Prisoner { get; set; }
 }

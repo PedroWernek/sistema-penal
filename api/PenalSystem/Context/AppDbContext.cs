@@ -12,7 +12,7 @@ public class AppDbContext : DbContext
     public required DbSet<Book> Books { get; set; }
     // public required DbSet<WorkDay> WorkDays { get; set; }
     // public required DbSet<Employee> Employees { get; set; }
-    // public required DbSet<Prisoner> Prisoners { get; set; }
+    public required DbSet<Prisoner> Prisoners { get; set; }
     // public required DbSet<Study> Studies { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

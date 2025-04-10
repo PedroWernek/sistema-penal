@@ -16,7 +16,6 @@ internal class BookConfiguration : IEntityTypeConfiguration<Book>
         builder.Property(x => x.Date).IsRequired();
         builder.Property(x => x.Isbn).HasMaxLength(11).IsFixedLength().IsRequired();
         
-        // builder.HasOne(x => x.Prisoner).WithMany(x => x.Books).IsRequired();
-        // TODO: Prisoner
+        builder.HasOne(x => x.Prisoner).WithMany(x => x.Books).IsRequired();
     }
 }

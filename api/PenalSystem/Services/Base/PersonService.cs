@@ -8,7 +8,7 @@ using PenalSystem.Interfaces;
 namespace PenalSystem.Services;
 
 public class PersonService<TEntity, TDTO, TCreateDTO, TUpdateDTO, TRepository> : IPersonServiceBase<TEntity, TDTO, TCreateDTO, TUpdateDTO>
-where TEntity : Person where TDTO : PersonDTO where TCreateDTO : PersonCreateDTO where TUpdateDTO : class where TRepository : IPersonRepositoryBase<TEntity>
+where TEntity : Person where TDTO : PersonDTO where TCreateDTO : PersonCreateDTO where TUpdateDTO : PersonUpdateDTO where TRepository : IPersonRepositoryBase<TEntity>
 {
     private readonly TRepository _repository;
     private readonly IUnitOfWork _uow;
@@ -102,21 +102,23 @@ where TEntity : Person where TDTO : PersonDTO where TCreateDTO : PersonCreateDTO
         return prisoners.Select(entity => _mapper.Map<TDTO>(entity)).ToList();
     }
 
-    public virtual async Task<OperationResult<TEntity>> UpdatePersonAsync(Guid id, TUpdateDTO updatedEntity, CancellationToken cancellation = default)
+    public virtual async Task<OperationResult<TEntity>> UpdatePersonAsync(TUpdateDTO updateDTO, TUpdateDTO updatedEntity, CancellationToken cancellation = default)
     {
         var result = new OperationResult<TEntity>();
 
-        var entityDTO = GetPersonByIdAsync(id);
-        var entity = _mapper.Map<TEntity>(entityDTO);
+        TEntity entity = await _repository.GetByIdAsync(updateDTO.Id, cancellation);
+        if (entity is null)
+            throw new ArgumentException("Invalid ID.");
 
+        _mapper.Map(updateDTO, entity);
         await _uow.BeginTransactionAsync();
 
         try
         {
-            // entity.Name = updatedEntity.Name;
-
             await _repository.Update(entity, cancellation);
             await _uow.CommitTransactionAsync();
+            
+            result = new OperationResult<TEntity> { Value = entity };
         }
         catch (Exception ex)
         {
@@ -127,6 +129,4 @@ where TEntity : Person where TDTO : PersonDTO where TCreateDTO : PersonCreateDTO
 
         return result;
     }
-
-    // REFAZER ACIMA
 }
